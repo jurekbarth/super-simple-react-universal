@@ -1,7 +1,7 @@
 {
-  "name": "simple-universal",
+  "name": "super-simple-react-universal",
   "version": "1.0.0",
-  "description": "",
+  "description": "Super simple react universal app.",
   "main": "index.js",
   "scripts": {
     "babel": "babel --presets es2015,stage-0 --ignore node_modules",
@@ -12,10 +12,9 @@
     "start": "node ./build/index.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Jurek Barth",
+  "license": "MIT",
   "dependencies": {
-    "ejs": "^2.4.1",
     "express": "^4.13.4",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
