@@ -1,15 +1,25 @@
-import express from 'express';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
 import { routes } from './routes';
 
-const app = express();
+const renderPage = (markup) => {
+  return `
+  <!doctype html>
+    <html lang="en">
+    <head>
+      <title>Simple Universal"</title>
+    </head>
+    <body>
+      <div id="app">${markup}</div>
+      <script type="text/javascript" charset="utf-8" src="/assets/clientRender.js"></script>
+    </body>
+  </html>
+  `;
+}
 
-app.use(express.static('public'));
-app.set('view engine', 'ejs');
 
-app.get('*', (req, res) => {
+export default (req, res) => {
   // routes is our object of React routes defined above
   match({ routes, location: req.url }, (err, redirectLocation, props) => {
     if (err) {
@@ -23,8 +33,7 @@ app.get('*', (req, res) => {
       // for the given route
       const markup = renderToString(<RouterContext {...props} />);
 
-      // render `index.ejs`, but pass in the markup we want it to display
-      res.render('index', { markup })
+      res.send(renderPage(markup))
 
     } else {
       // no route match, so 404. In a real app you might render a custom
@@ -32,9 +41,4 @@ app.get('*', (req, res) => {
       res.sendStatus(404);
     }
   });
-});
-
-app.listen(3000);
-app.on('listening', () => {
-  console.log('Listening on 3000');
-});
+};
